@@ -29,11 +29,11 @@ public class JDBCExample {
 		// -> DBMS 타입, 이름, IP, Port, 계정명, 비밀번호 저장
 		// -> DBeaver의 계정 접속 방법과 유사함
 		
-		// * Java 와 DB 사이를 연결해주는 통로(String과 유사함)
+		// * Java 와 DB 사이를 연결해주는 통로(Stream과 유사함)
 		
 		Statement stmt = null;
 		// Connection을 통해 SQL문을 DB에 전달하여 실행하고
-		// 생성된 결과(ResultSet, 성공한 행의 개수)를 반환(Java로)하는 데 사용되는 개체
+		// 생성된 결과(ResultSet, 성공한 행의 개수)를 반환(Java로)하는 데 사용되는 객체
 		// (배달 역할)
 		
 		ResultSet rs = null;

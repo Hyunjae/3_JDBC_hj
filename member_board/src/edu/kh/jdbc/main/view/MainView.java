@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import edu.kh.jdbc.main.model.service.MainService;
+import edu.kh.jdbc.member.view.MemberView;
 import edu.kh.jdbc.member.vo.Member;
 
 // 메인 화면
@@ -14,10 +15,15 @@ public class MainView {
 	private MainService service = new MainService();
 
 	// 로그인된 회원 정보를 저장한 객체를 참조하는 참조변수
-	private Member loginMember = null;
+//	private Member loginMember = null;
+	public static Member loginMember = null;  // 다른 곳에서 접근 가능하게 만듦
+	
 	// -> 로그인 X == null
 	// -> 로그인 O != null
 
+	// 회원 기능 메뉴 객체 생성
+	private MemberView memberView = new MemberView();
+	
 	/**
 	 * 메인 메뉴 출력 메서드
 	 */
@@ -66,8 +72,12 @@ public class MainView {
 					System.out.println();
 
 					switch (input) {
-					case 1:  break;
+					
+					// 회원 기능 서브 메뉴 출력(매개변수도 같이 전달)
+					case 1: memberView.memberMenu(loginMember); break;
+					
 					case 2: break;
+					
 					case 0: loginMember = null; 
 							System.out.println("[로그아웃 되었습니다.]");
 							input = -1;  // do-while문이 종료되지 않도록 0이 아닌 값으로 변경
@@ -143,7 +153,6 @@ public class MainView {
 				} else { // 일치하지 않을 경우
 					System.out.println("[비밀번호가 일치하지 않습니다. 다시 입력해주세요.]");
 				}
-				System.out.println();
 			}
 
 			// 이름 입력

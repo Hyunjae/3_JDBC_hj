@@ -3,6 +3,7 @@ package edu.kh.jdbc.main.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import edu.kh.jdbc.board.view.BoardView;
 import edu.kh.jdbc.main.model.service.MainService;
 import edu.kh.jdbc.member.view.MemberView;
 import edu.kh.jdbc.member.vo.Member;
@@ -23,6 +24,8 @@ public class MainView {
 
 	// 회원 기능 메뉴 객체 생성
 	private MemberView memberView = new MemberView();
+	// 게시판 기능 메뉴 객체 생성
+	private BoardView boardView = new BoardView();
 	
 	/**
 	 * 메인 메뉴 출력 메서드
@@ -76,7 +79,9 @@ public class MainView {
 					// 회원 기능 서브 메뉴 출력(매개변수도 같이 전달)
 					case 1: memberView.memberMenu(loginMember); break;
 					
-					case 2: break;
+					case 2: boardView.boardMenu(); break;
+					// 매개 변수로 loginMember 넘기지 않고,
+					// 회원 정보가 필요한 경우에 static에서 얻어와 사용할 예정
 					
 					case 0: loginMember = null; 
 							System.out.println("[로그아웃 되었습니다.]");
@@ -101,7 +106,7 @@ public class MainView {
 	}
 
 	/**
-	 * 1. 회원가입 화면
+	 * 2. 회원가입 화면
 	 */
 	private void signUp() {
 		System.out.println("[회원 가입]");
@@ -197,7 +202,7 @@ public class MainView {
 	}
 	
 	/**
-	 * 로그인 화면
+	 * 1. 로그인 화면
 	 */
 	private void login() {
 		System.out.println("[로그인]");

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>main-query.xml</comment>
+
+	<!-- 로그인 -->
+	<entry key="login">
+		SELECT STUDENT_NO, STUDENT_ID, STUDENT_NM, STUDENT_GENDER,
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') ENROLL_DATE
+		FROM STUDENT
+		WHERE STUDENT_ID = ?
+		AND STUDENT_PW = ?
+		AND SECESSION_FL = 'N'
+	</entry>
+	
+	<!-- 아이디 중복검사 -->
+	<entry key="idDupCheck">
+		SELECT COUNT(*)
+		FROM STUDENT
+		WHERE STUDENT_ID = ?
+		AND SECESSION_FL = 'N'
+	</entry>
+	
+	<!-- 회원가입 -->
+	<entry key="signUp">
+		INSERT INTO STUDENT 
+		VALUES(SEQ_NO.NEXTVAL, ?, ?, ?, ?, DEFAULT, DEFAULT)
+	</entry>
+</properties>

@@ -56,6 +56,23 @@ public class MainService {
 		
 		return result;
 	}
+
+	/** 3. 아이디 찾기 service
+	 * @param stdName
+	 * @param stdPhone
+	 * @return stdId
+	 * @throws Exception
+	 */
+	public String findId(String stdName, String stdPhone) throws Exception {
+		
+		Connection conn = getConnection();
+		
+		String stdId = dao.findId(conn, stdName, stdPhone);
+		
+		close(conn);
+		
+		return stdId;
+	}
 	
 	
 	

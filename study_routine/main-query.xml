@@ -5,7 +5,7 @@
 
 	<!-- 로그인 -->
 	<entry key="login">
-		SELECT STUDENT_NO, STUDENT_ID, STUDENT_NM, STUDENT_GENDER,
+		SELECT STUDENT_NO, STUDENT_ID, STUDENT_NM, STUDENT_GENDER, STUDENT_PHONE,
 		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') ENROLL_DATE
 		FROM STUDENT
 		WHERE STUDENT_ID = ?
@@ -24,6 +24,15 @@
 	<!-- 회원가입 -->
 	<entry key="signUp">
 		INSERT INTO STUDENT 
-		VALUES(SEQ_NO.NEXTVAL, ?, ?, ?, ?, DEFAULT, DEFAULT)
+		VALUES(SEQ_NO_STD.NEXTVAL, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)
 	</entry>
+	
+	<!-- 아이디 찾기 -->
+	<entry key="findId">
+		SELECT STUDENT_ID
+		FROM STUDENT
+		WHERE STUDENT_NM = ?
+		AND STUDENT_PHONE = ?
+	</entry>
+	
 </properties>

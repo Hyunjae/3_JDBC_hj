@@ -53,6 +53,7 @@ public class MainDAO {
 				loginStudent.setStudentId(rs.getString("STUDENT_ID"));
 				loginStudent.setStudentName(rs.getString("STUDENT_NM"));
 				loginStudent.setStudentGender(rs.getString("STUDENT_GENDER"));
+				loginStudent.setStudentPhone(rs.getString("STUDENT_PHONE"));
 				loginStudent.setEnrollDate(rs.getString("ENROLL_DATE"));
 			}
 			
@@ -106,6 +107,7 @@ public class MainDAO {
 			pstmt.setString(2, student.getStudentPw());
 			pstmt.setString(3, student.getStudentName());
 			pstmt.setString(4, student.getStudentGender());
+			pstmt.setString(5, student.getStudentPhone());
 			
 			result = pstmt.executeUpdate();
 		}finally {
@@ -113,5 +115,35 @@ public class MainDAO {
 		}
 		return result;
 	}
-	
+
+	/** 아이디 찾기 DAO
+	 * @param conn
+	 * @param stdName
+	 * @param stdPhone
+	 * @return stdId
+	 * @throws Exception
+	 */
+	public String findId(Connection conn, String stdName, String stdPhone) throws Exception {
+		
+		String stdId = null;
+		
+		try {
+			String sql = prop.getProperty("findId");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, stdName);
+			pstmt.setString(2, stdPhone);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				stdId = rs.getString("STUDENT_ID");
+			}
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return stdId;
+	}
 }

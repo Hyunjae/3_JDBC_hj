@@ -7,22 +7,21 @@ public class Student {
 	private String studentPw;
 	private String studentName;
 	private String studentGender;
+	private String studentPhone;
 	private String enrollDate;
 	private String secessionFlag;
 	
 	public Student() {}
 
 	
-	
-	public Student(String studentId, String studentPw, String studentName, String studentGender) {
+	public Student(String studentId, String studentPw, String studentName, String studentGender, String studentPhone) {
 		super();
 		this.studentId = studentId;
 		this.studentPw = studentPw;
 		this.studentName = studentName;
 		this.studentGender = studentGender;
+		this.studentPhone = studentPhone;
 	}
-
-
 
 	public int getStudentNo() {
 		return studentNo;
@@ -62,6 +61,14 @@ public class Student {
 
 	public void setStudentGender(String studentGender) {
 		this.studentGender = studentGender;
+	}
+
+	public String getStudentPhone() {
+		return studentPhone;
+	}
+
+	public void setStudentPhone(String studentPhone) {
+		this.studentPhone = studentPhone;
 	}
 
 	public String getEnrollDate() {

@@ -223,11 +223,12 @@ public class MainView {
 				System.out.println(loginMember.getMemberName() + "님 환영합니다.");
 				
 			} else { // 로그인 실패 시
-				System.out.println("[아이디 또는 비밀번호가 일치하지 않습니다.");
+				System.out.println("[아이디 또는 비밀번호가 일치하지 않습니다.]");
 			}
 			System.out.println();
 		} catch(Exception e) {
 			System.out.println("\n<<로그인 중 예외 발생>>\n");
+			e.printStackTrace();
 		}
 	}
 }

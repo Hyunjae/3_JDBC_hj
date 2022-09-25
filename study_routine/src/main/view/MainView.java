@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import main.model.service.MainService;
+import routine.view.RoutineView;
 import student.vo.Student;
 
 public class MainView {
@@ -11,6 +12,7 @@ public class MainView {
 	private Scanner sc = new Scanner(System.in);
 	
 	private MainService service = new MainService();
+	private RoutineView routineView = new RoutineView();
 	
 	public static Student loginStudent;
 	
@@ -55,7 +57,7 @@ public class MainView {
 					sc.nextLine();
 					
 					switch(input) {
-					case 1 :  break;
+					case 1 : routineView.routineMenu(); break;
 					case 2 :  break;
 					case 3 :  break;
 					case 0 :  break;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>routine-query.xml</comment>
+
+	<!-- 루틴 조회 -->
+	<entry key="selectAllRt">
+		SELECT RT_NAME, RT_NO FROM ROUTINE
+		WHERE STUDENT_NO = ?
+	</entry>
+
+	<!-- 루틴 기록 -->
+	<entry key="recordRt">
+		INSERT INTO CHECK_RT 
+		VALUES(SEQ_NO_CHECK.NEXTVAL, ?, ?, TO_DATE('22/'|| ?))
+	</entry>
+
+	<!-- 루틴 추가 -->
+	<entry key="updateRt">
+		INSERT INTO ROUTINE 
+		VALUES(SEQ_NO_RT.NEXTVAL, ?, ?)
+	</entry>
+
+	<!-- 한달 루틴 조회 -->
+	<entry key="monthlyRt">
+		SELECT * 
+		FROM (SELECT RT_NO, RT_NAME, CHECK_RT, TO_CHAR(CHECK_DATE, 'DD')  CHECK_DATE
+		    FROM CHECK_RT
+		    JOIN ROUTINE USING(RT_NO)
+		    WHERE STUDENT_NO = ?
+		    AND EXTRACT(MONTH FROM CHECK_DATE) = ?)
+		PIVOT( MIN(CHECK_RT) 
+		FOR CHECK_DATE
+		IN ('01', '02', '03', '04', '05',
+		   '06', '07', '08', '09' ,'10',
+		   '11', '12', '13', '14' ,'15',
+		   '16', '17', '18', '19' ,'20',
+		   '21', '22', '23', '24' ,'25',
+		   '26', '27', '28', '29' ,'30', '31'
+		))
+	</entry>
+
+
+
+</properties>

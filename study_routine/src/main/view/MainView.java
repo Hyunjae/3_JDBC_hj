@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import main.model.service.MainService;
 import routine.view.RoutineView;
+import student.view.StudentView;
 import student.vo.Student;
 
 public class MainView {
@@ -13,8 +14,9 @@ public class MainView {
 	
 	private MainService service = new MainService();
 	private RoutineView routineView = new RoutineView();
+	private StudentView studentView = new StudentView();
 	
-	public static Student loginStudent;
+	public static Student loginStudent = null;
 	
 	public void mainMenu() {
 		int input = -1;		
@@ -59,17 +61,21 @@ public class MainView {
 					switch(input) {
 					case 1 : routineView.routineMenu(); break;
 					case 2 :  break;
-					case 3 :  break;
-					case 0 :  break;
-					case 99 : System.out.println("\n[프로그램을 종료합니다.]\n"); break;
+					case 3 : studentView.studentMenu(loginStudent); break;
+					case 0 : loginStudent = null;
+							System.out.println("\n[로그아웃 되었습니다.]\n"); 
+							input = -1;
+							break;
+					case 99 : System.out.println("\n[프로그램을 종료합니다.]\n"); 
+							System.exit(0);   break;
 					default : System.out.println("\n>>메뉴에 있는 번호만 입력해주세요<<\n");
 					}
 					System.out.println();
 					
 				}
 			} catch(InputMismatchException e) {
-			System.out.println("\n>>입력 형식이 올바르지 않습니다<<\n");
-			sc.nextLine();
+				System.out.println("\n>>입력 형식이 올바르지 않습니다<<\n");
+				sc.nextLine();
 			}
 		} while(input != 0);			
 	}
@@ -78,10 +84,10 @@ public class MainView {
 	/**
 	 * 1.로그인
 	 */
-	private void login() {
-		System.out.println("\n[로그인]\n");
-		
+	private void login() {		
 		try {
+			System.out.println("\n[로그인]\n");
+			
 			System.out.print("아이디 : ");
 			String loginId = sc.next();
 
@@ -105,16 +111,16 @@ public class MainView {
 	/**
 	 * 2. 회원가입
 	 */
-	private void signUp() {
-		System.out.println("\n[회원가입]\n");
-		String stdId;
-		String stdPw1;
-		String stdPw2;
-		String stdName;
-		String stdGender;
-		String stdPhone;
-		
+	private void signUp() {		
 		try {
+			System.out.println("\n[회원가입]\n");
+			String stdId;
+			String stdPw1;
+			String stdPw2;
+			String stdName;
+			String stdGender;
+			String stdPhone;
+			
 			// 1) 아이디 입력
 			while(true) {
 				System.out.print("아이디 : ");
@@ -181,15 +187,14 @@ public class MainView {
 	}
 	
 	private void findId() {
-		System.out.println("\n[아이디 찾기]\n");
-		
-		System.out.print("이름 : ");
-		String stdName = sc.next();
-		
-		System.out.print("핸드폰 번호('-' 포함) : ");
-		String stdPhone = sc.next();
-		
 		try {
+			System.out.println("\n[아이디 찾기]\n");
+			
+			System.out.print("이름 : ");
+			String stdName = sc.next();
+			
+			System.out.print("핸드폰 번호('-' 포함) : ");
+			String stdPhone = sc.next();
 			String stdId = service.findId(stdName, stdPhone);
 			
 			while(true) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>student-query.xml</comment>
+	
+	<!-- 회원 정보 수정 -->
+	<entry key="updateStudent">
+		UPDATE STUDENT
+		SET STUDENT_NM = ?,
+		STUDENT_PHONE = ?
+		WHERE STUDENT_NO = ?
+	</entry>
+	
+	<!-- 비밀번호 변경 -->
+	<entry key="updatePw">
+		UPDATE STUDENT
+		SET STUDENT_PW = ?	
+		WHERE STUDENT_NO = ?
+		AND STUDENT_PW = ?	
+	</entry>
+
+</properties>

@@ -1,6 +1,5 @@
 ---------< 메인화면 >----------
-DROP TABLE STUDENT;
-DROP SEQUENCE SEQ_NO_STD;
+
 -- STUDENT 테이블 생성
 CREATE TABLE STUDENT (
 	STUDENT_NO NUMBER PRIMARY KEY,
@@ -92,7 +91,7 @@ COMMIT;
 --------<매일 기록 체크>-------------
 -- 체크리스트 생성
 
-DROP TABLE CHECK_RT;
+--DROP TABLE CHECK_RT;
 
 CREATE TABLE CHECK_RT(
 	CHECK_NO NUMBER PRIMARY KEY,
@@ -107,7 +106,6 @@ COMMENT ON COLUMN CHECK_RT.CHECK_RT IS '루틴 체크';
 COMMENT ON COLUMN CHECK_RT.CHECK_DATE IS '기록 날짜';
 
 CREATE SEQUENCE SEQ_NO_CHECK NOCACHE;
-DROP SEQUENCE SEQ_NO_CHECK;
 
 INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 1, 'O', '2022-09-01');
 INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 2, 'O', '2022-09-01');
@@ -133,25 +131,127 @@ INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 3, 'O', '2022-09-04');
 INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 4, 'O', '2022-09-04');
 INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 5, 'X', '2022-09-04');
 
+INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 1, 'O', TO_DATE('22/9/5'));
+INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 2, 'O', TO_DATE('22/'||'9/5'));
+INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 3, 'X', TO_DATE('22/'||'9/5'));
+INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, 4, 'O', TO_DATE('22/'||'9/5'));
+
+DELETE FROM CHECK_RT WHERE CHECK_NO = 27;
 
 SELECT * FROM CHECK_RT;
 
 COMMIT;
 
 
-SELECT TO_DATE('22/7/21') FROM DUAL;
-
-DELETE FROM CHECK_RT WHERE CHECK_NO = 10;
+--SELECT TO_DATE('22/7/21') FROM DUAL;
 
 
+-- 나의 루틴 전체 조회
+SELECT RT_NAME FROM ROUTINE
+WHERE STUDENT_NO = 1;
+
+-- 루틴 기록
+INSERT INTO CHECK_RT VALUES(SEQ_NO_CHECK.NEXTVAL, ?, ?, ?);
+
+SELECT * FROM STUDENT;	
+SELECT * FROM ROUTINE;
+-- 루틴 추가
+INSERT INTO ROUTINE VALUES(SEQ_NO_RT.NEXTVAL, '운동하기', 3);
+
+
+SELECT RT_NAME, CHECK_RT, CHECK_DATE
+FROM CHECK_RT
+JOIN ROUTINE USING(RT_NO)
+WHERE STUDENT_NO = 1
+GROUP BY CHECK_DATE;
+
+SELECT (SELECT RT_NAME FROM ROUTINE WHERE STUDENT_NO = 1)
+FROM CHECK_RT C;
+
+-- 회원 정보 수정
+UPDATE STUDENT
+SET STUDENT_NM = '김지민',
+STUDENT_PHONE = '010-2050-7831'
+WHERE STUDENT_NO = 6;
+
+ROLLBACK;
+
+-- 비밀번호 변경
+UPDATE STUDENT
+SET STUDENT_PW = 'pass1234'
+WHERE STUDENT_NO = 1
+AND STUDENT_PW = 'pass01';
+
+
+-- 한달 루틴 보기
+SELECT * 
+FROM (SELECT RT_NO, RT_NAME, CHECK_RT, TO_CHAR(CHECK_DATE, 'DD')  CHECK_DATE
+    FROM CHECK_RT
+    JOIN ROUTINE USING(RT_NO)
+    WHERE STUDENT_NO = 1
+    AND EXTRACT(MONTH FROM CHECK_DATE) = 9)
+PIVOT( MIN(CHECK_RT) 
+FOR CHECK_DATE
+IN ('01', '02', '03', '04', '05',
+   '06', '07', '08', '09' ,'10',
+   '11', '12', '13', '14' ,'15',
+   '16', '17', '18', '19' ,'20',
+   '21', '22', '23', '24' ,'25',
+   '26', '27', '28', '29' ,'30', '31'
+));
+-- List< Map<String, String> >
+
+--           컬럼명,  값
+--           "rtNo" ,  "1"
+--         "reName" , "복습하기"
+--            "01" , "O"
+--            "02" , "X"
+
+--           "rtNo" ,  "2"
+--         "reName" , "운동하기"
+--           "01" , "O"
+--            "02" , "X"
+
+--           "rtNo" ,  "3"
+--         "reName" , "6시 기상"
+--           "01" , "O"
+--            "02" , "X"
+
+/*
+ * while(rs.next){
+ *    Map<String,String> map = new LinkedHashMap<>();
+ *  map.put("rtNo" , rs.getInt("RT_NO") + "" );
+ *  map.put("rtName" , rs.getString("RT_NAME") );
+ * 
+ *  for(int i=1 ; i<=31 ; i++){
+ *       String col = i < 10 ? "0" + i : "" + i;      
+ *        map.put(col , rs.getString(col) );
+ * 
+ *  }
+ *
+ *  list.add(map);
+ * } 
+ * 
+ * */
 
 
 
 
 
+SELECT TO_CHAR(CHECK_DATE, 'YYYY-MM-DD')
+FROM CHECK_RT
+JOIN ROUTINE USING(RT_NO)
+WHERE STUDENT_NO = 1
+AND EXTRACT(MONTH FROM CHECK_DATE) = 9   
+GROUP BY TO_CHAR(CHECK_DATE, 'YYYY-MM-DD')
+ORDER BY 1;
+--> List<String> 날짜 저장
 
+SELECT RT_NAME, CHECK_RT
+FROM CHECK_RT
+JOIN ROUTINE USING(RT_NO)
+WHERE STUDENT_NO = 1
+AND CHECK_DATE = '2022-09-05' -- 위 SELECT 결과 1행씩 대입
+ORDER BY RT_NO;
 
-
-
-
-
+-- List< List <  VO(rtName, checkRt)  >  >

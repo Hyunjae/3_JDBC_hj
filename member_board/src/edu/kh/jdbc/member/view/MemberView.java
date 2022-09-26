@@ -30,7 +30,7 @@ public class MemberView {
 	 * @param loginMember(로그인된 회원 정보)
 	 */
 	public void memberMenu(Member loginMember) {
-//		int input = -1; 필드로 이동
+//		int input = -1; // 필드로 이동
 		
 		// 전달 받은 로그인 회원 정보를 필드에 저장
 		this.loginMember = loginMember;

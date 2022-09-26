@@ -2,6 +2,7 @@ package routine.view;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -152,6 +153,7 @@ public class RoutineView {
 		}
 	}
 	
+	
 	private void monthlyRt() {
 		try {
 			System.out.println("\n[나의 루틴 추가하기]\n");
@@ -160,8 +162,16 @@ public class RoutineView {
 			
 			List<Map<String, String>> monthlyRt = service.monthlyRt(month, MainView.loginStudent.getStudentNo());
 			
-			if(!monthlyRt.isEmpty()) {
-				
+			if(monthlyRt.isEmpty()) {
+				System.out.println("\n[조회된 루틴이 없습니다.]\n");
+			} else {
+				for(int i=0; i< monthlyRt.size(); i++) {
+					LinkedHashMap<String, String> map = new LinkedHashMap<>(monthlyRt.get(i));
+					
+					for(String key : map.keySet()) {
+						System.out.println(key + " : " + map.keySet());
+					}
+				}
 			}
 			
 		} catch (Exception e) {

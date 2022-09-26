@@ -119,10 +119,10 @@ public class RoutineDAO {
 	public List<Map<String, String>> monthlyRt(Connection conn, int month, int studentNo)
 	throws Exception{
 		
-		List<Map<String, String>> monthlyRt = new ArrayList<>();
+		List<Map<String, String>> monthlyRt = new ArrayList<Map<String, String>>();
 		
 		try {
-			String sql = prop.getProperty("selectAllRt");
+			String sql = prop.getProperty("monthlyRt");
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, studentNo);
@@ -130,8 +130,9 @@ public class RoutineDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			Map<String, String> map = new LinkedHashMap<>();
 			while(rs.next()) {
+				Map<String, String> map = new LinkedHashMap<String, String>();
+
 				map.put("rtNo", rs.getInt("RT_NO")+"");  // 문자열로 만들기 위해 ""붙임
 				map.put("rtName", rs.getString("RT_NAME"));
 				

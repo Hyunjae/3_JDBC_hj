@@ -98,6 +98,35 @@ public class RoutineDAO {
 	}
 
 
+	/** 루틴 기록 수정 DAO
+	 * @param conn
+	 * @param string
+	 * @param recordDate
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateRtRecord(Connection conn, int routineNo, String string, String recordDate) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updateRtRecord");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, string);
+			pstmt.setString(2, recordDate);
+			pstmt.setInt(3, routineNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 	/** 루틴 추가 DAO
 	 * @param conn
 	 * @param studentNo
@@ -218,27 +247,6 @@ public class RoutineDAO {
 			close(pstmt);
 		}
 		return monthlyRt;
-	}
-
-
-	public int updateRtRecord(Connection conn, int routineNo, String string, String recordDate) throws Exception {
-		
-		int result = 0;
-		
-		try {
-			
-			String sql = prop.getProperty("updateRtRecord");
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, string);
-			pstmt.setString(2, recordDate);
-			
-			result = pstmt.executeUpdate();
-			
-		} finally {
-			close(pstmt);
-		}
-		return result;
 	}
 
 

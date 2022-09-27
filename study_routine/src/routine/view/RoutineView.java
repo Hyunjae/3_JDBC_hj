@@ -65,15 +65,15 @@ public class RoutineView {
 			List<Routine> routineList = service.selectAllRt(MainView.loginStudent.getStudentNo());
 			
 			if(!routineList.isEmpty()) {
-				int input = 0;
+				int input = -1;
 				
 				do {
-					System.out.println("\n* " + MainView.loginStudent.getStudentName() + "님의 루틴 목록 *\n");
-					System.out.println("순번 | 루틴no | 루틴이름 ");
+					System.out.println("* " + MainView.loginStudent.getStudentName() + "님의 루틴 목록 *\n");
+					System.out.println("순번 | 루틴no |  루틴이름 ");
 					System.out.println("--------------------------");
 					for(int i=0; i<routineList.size() ; i++) {
 						System.out.print(i+1 + "번      ");
-						System.out.print(routineList.get(i).getRoutineNo() + "      ");
+						System.out.print(routineList.get(i).getRoutineNo() + "     ");
 						System.out.println(routineList.get(i).getRoutineName()); }
 					
 					System.out.println();
@@ -94,7 +94,7 @@ public class RoutineView {
 	 * @param routineList
 	 */
 	private int subRtMenu(List<Routine> routineList) {
-		int input = 0;
+		int input = -1;
 		
 		try {
 			System.out.println("1) 루틴 추가");
@@ -129,7 +129,7 @@ public class RoutineView {
 		try {
 			System.out.println("\n[나의 루틴 생성하기]\n");
 			
-			System.out.print("\n루틴 이름 : ");
+			System.out.print("루틴 이름 : ");
 			String routineName = sc.next();
 			
 			int result = service.insertRt(routineName, MainView.loginStudent.getStudentNo());
@@ -155,7 +155,7 @@ public class RoutineView {
 		try {
 			System.out.println("\n[나의 루틴 수정]\n");
 			
-			System.out.print("\n수정할 루틴 번호 입력 : ");
+			System.out.print("수정할 루틴 번호 입력 : ");
 			int rtNo = sc.nextInt();
 			sc.nextLine();
 			
@@ -195,7 +195,7 @@ public class RoutineView {
 			
 			System.out.println("\n[나의 루틴 삭제하기]\n");
 			
-			System.out.print("\n삭제할 루틴(번호 입력) : ");
+			System.out.print("삭제할 루틴(번호 입력) : ");
 			int rtNo = sc.nextInt();
 			
 			boolean flag = true;
@@ -223,7 +223,7 @@ public class RoutineView {
 		try {
 			System.out.println("\n[오늘의 루틴을 기록하세요]\n");
 			
-			System.out.print("\n기록일(월/일) : ");
+			System.out.print("기록일(월/일) : ");
 			String recordDate = sc.next();
 			
 			List<Routine> routineList = service.selectAllRt(MainView.loginStudent.getStudentNo());
@@ -264,7 +264,7 @@ public class RoutineView {
 				System.out.print("(O/X) : ");
 				String input = sc.next().toUpperCase();
 				sc.nextLine();
-
+	
 				if(input.equals("O") || input.equals("X")) {
 					oxList.add(input);
 					break;
@@ -276,7 +276,8 @@ public class RoutineView {
 			}
 		}
 	}
-	
+
+
 	/**
 	 * 4. 루틴 기록 수정
 	 */
@@ -284,7 +285,7 @@ public class RoutineView {
 		try {
 			System.out.println("\n[루틴 기록 수정]\n");
 			
-			System.out.print("\n수정할 날짜(월/일) : ");
+			System.out.print("수정할 날짜(월/일) : ");
 			String recordDate = sc.next();
 			
 			List<Routine> routineList = service.selectAllRt(MainView.loginStudent.getStudentNo());
@@ -310,9 +311,9 @@ public class RoutineView {
 			System.out.println("\n※ 나의 루틴 수정 중 예외 발생 ※\n");
 			e.printStackTrace();
 		}
-	} 
+	}
 
-	
+
 	/**
 	 * 5. 한 달 기록 보기
 	 */
@@ -338,7 +339,7 @@ public class RoutineView {
 	               for(String key : map.keySet()) { // key value만 출력
 	                  
 	                  String check = map.get(key) == null ? " " : map.get(key);
-	                  
+//	                  System.out.print(key + " ");
 	                  System.out.print(check  + "   ");
 	               }
 	               System.out.println();

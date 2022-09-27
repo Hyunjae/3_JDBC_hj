@@ -53,6 +53,32 @@ public class RoutineService {
 		return result;
 	}
 
+	/** 루틴 기록 수정 service
+	 * @param routineList
+	 * @param oxList
+	 * @param recordDate
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateRtRecord(List<Routine> routineList, List<String> oxList, String recordDate)
+	throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = 0;
+		for(int i=0; i<routineList.size() ; i++) {
+			result += dao.updateRtRecord(conn, routineList.get(i).getRoutineNo(),
+										oxList.get(i), recordDate);
+		}
+		
+		if(result == routineList.size()) commit(conn);
+		else							 rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
 	/** 루틴 추가 service
 	 * @param studentNo
 	 * @return result
@@ -105,25 +131,6 @@ public class RoutineService {
 		
 		if(result > 0) commit(conn);
 		else		   rollback(conn);
-		
-		close(conn);
-		
-		return result;
-	}
-	
-	public int updateRtRecord(List<Routine> routineList, List<String> oxList, String recordDate)
-	throws Exception{
-		
-		Connection conn = getConnection();
-		
-		int result = 0;
-		for(int i=0; i<routineList.size() ; i++) {
-			result += dao.updateRtRecord(conn, routineList.get(i).getRoutineNo(), 
-					oxList.get(i), recordDate);
-		}
-		
-		if(result == routineList.size()) commit(conn);
-		else							 rollback(conn);
 		
 		close(conn);
 		

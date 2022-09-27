@@ -39,6 +39,7 @@
 		UPDATE CHECK_RT
 		SET CHECK_RT = ?
 		WHERE CHECK_DATE = TO_DATE('22/'||?)
+		AND RT_NO = ?
 	</entry>
 
 

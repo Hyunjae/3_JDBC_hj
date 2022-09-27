@@ -7,19 +7,40 @@
 	<entry key="selectAllRt">
 		SELECT RT_NAME, RT_NO FROM ROUTINE
 		WHERE STUDENT_NO = ?
+		AND SECESSION_FL = 'N'
 	</entry>
 
+	<!-- 루틴 추가 -->
+	<entry key="insertRt">
+		INSERT INTO ROUTINE 
+		VALUES(SEQ_NO_RT.NEXTVAL, ?, ?, default)
+	</entry>
+	
+	<!-- 루틴 수정 -->
+	<entry key="updateRt">
+		UPDATE ROUTINE SET RT_NAME = ?
+		WHERE RT_NO = ?
+	</entry>
+	
+	<!-- 루틴 삭제 -->
+	<entry key="deleteRt">
+		UPDATE ROUTINE SET SECESSION_FL = 'Y'
+		WHERE RT_NO = ?
+	</entry>
+	
 	<!-- 루틴 기록 -->
 	<entry key="recordRt">
 		INSERT INTO CHECK_RT 
 		VALUES(SEQ_NO_CHECK.NEXTVAL, ?, ?, TO_DATE('22/'|| ?))
 	</entry>
-
-	<!-- 루틴 추가 -->
-	<entry key="updateRt">
-		INSERT INTO ROUTINE 
-		VALUES(SEQ_NO_RT.NEXTVAL, ?, ?)
+	
+	<!-- 루틴 기록 수정 -->
+	<entry key="updateRtRecord">
+		UPDATE CHECK_RT
+		SET CHECK_RT = ?
+		WHERE CHECK_DATE = TO_DATE('22/'||?)
 	</entry>
+
 
 	<!-- 한달 루틴 조회 -->
 	<entry key="monthlyRt">
@@ -28,7 +49,8 @@
 		    FROM CHECK_RT
 		    JOIN ROUTINE USING(RT_NO)
 		    WHERE STUDENT_NO = ?
-		    AND EXTRACT(MONTH FROM CHECK_DATE) = ?)
+		    AND EXTRACT(MONTH FROM CHECK_DATE) = ?
+		    AND SECESSION_FL = 'N')
 		PIVOT( MIN(CHECK_RT) 
 		FOR CHECK_DATE
 		IN ('01', '02', '03', '04', '05',

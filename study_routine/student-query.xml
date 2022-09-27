@@ -19,4 +19,12 @@
 		AND STUDENT_PW = ?	
 	</entry>
 
+	<!-- 회원 탈퇴 -->
+	<entry key="secession">
+		UPDATE STUDENT SET SECESSION_FL='Y'
+		WHERE STUDENT_NO = ?
+		AND STUDENT_PW = ?
+	</entry>
+	
+
 </properties>

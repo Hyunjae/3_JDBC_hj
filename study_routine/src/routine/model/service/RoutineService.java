@@ -58,11 +58,32 @@ public class RoutineService {
 	 * @return result
 	 * @throws Exception
 	 */
-	public int updateRt(String routineName, int studentNo) throws Exception {
+	public int insertRt(String routineName, int studentNo) throws Exception {
 		
 		Connection conn = getConnection();
 		
-		int result = dao.updateRt(conn, routineName, studentNo);
+		int result = dao.insertRt(conn, routineName, studentNo);
+		
+		if(result > 0) commit(conn);
+		else		   rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+
+	/** 루틴 수정 service
+	 * @param rtNo
+	 * @param studentNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateRt(int rtNo, String rtName) throws Exception {
+		
+		Connection conn = getConnection();
+		
+		int result = dao.updateRt(conn, rtNo, rtName);
 		
 		if(result > 0) commit(conn);
 		else		   rollback(conn);
@@ -72,6 +93,49 @@ public class RoutineService {
 		return result;
 	}
 
+	/** 루틴 삭제 service
+	 * @param rtNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteRt(int rtNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.deleteRt(conn, rtNo);
+		
+		if(result > 0) commit(conn);
+		else		   rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int updateRtRecord(List<Routine> routineList, List<String> oxList, String recordDate)
+	throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = 0;
+		for(int i=0; i<routineList.size() ; i++) {
+			result += dao.updateRtRecord(conn, routineList.get(i).getRoutineNo(), 
+					oxList.get(i), recordDate);
+		}
+		
+		if(result == routineList.size()) commit(conn);
+		else							 rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	/** 한 달 기록 조회 service
+	 * @param month
+	 * @param studentNo
+	 * @return monthlyRt
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> monthlyRt(int month, int studentNo)
 	throws Exception{
 		
@@ -84,7 +148,6 @@ public class RoutineService {
 		return monthlyRt;
 	}
 
-	
 	
 
 

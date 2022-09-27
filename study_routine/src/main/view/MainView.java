@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import main.model.service.MainService;
 import routine.view.RoutineView;
+import score.view.ScoreView;
 import student.view.StudentView;
 import student.vo.Student;
 
@@ -15,6 +16,7 @@ public class MainView {
 	private MainService service = new MainService();
 	private RoutineView routineView = new RoutineView();
 	private StudentView studentView = new StudentView();
+	private ScoreView scoreView = new ScoreView();
 	
 	public static Student loginStudent = null;
 	
@@ -60,7 +62,7 @@ public class MainView {
 					
 					switch(input) {
 					case 1 : routineView.routineMenu(); break;
-					case 2 :  break;
+					case 2 : scoreView.scoreMenu(); break;
 					case 3 : studentView.studentMenu(loginStudent); break;
 					case 0 : loginStudent = null;
 							System.out.println("\n[로그아웃 되었습니다.]\n"); 
@@ -98,13 +100,12 @@ public class MainView {
 			loginStudent = service.login(loginId, loginPw);
 			
 			if(loginStudent != null) {
-				System.out.println("\n" + loginStudent.getStudentName() + "님 오늘도 열공하세요 :)\n");
+				System.out.println("\n* " + loginStudent.getStudentName() + "님 오늘도 열공하세요 :) *\n");
 			} else {
-				System.out.println("\n>>아이디 또는 비밀번호가 일치하지 않습니다<<\n");
+				System.out.println("\n** 아이디 또는 비밀번호가 일치하지 않습니다.\n");
 			}
-			
 		} catch(Exception e) {
-			System.out.println("\n>>로그인 중 예외 발생<<\n");
+			System.out.println("\n ※ 로그인 중 예외 발생 ※ \n");
 		}	
 	}
 	
@@ -128,10 +129,10 @@ public class MainView {
 				int	result = service.idDupCheck(stdId);
 				
 				if(result == 0) {
-					System.out.println("\n[사용 가능한 아이디입니다.]\n");
+					System.out.println("\n* 사용 가능한 아이디입니다 *\n");
 					break;
 				} else {
-					System.out.println("\n>>이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.<<\n");
+					System.out.println("\n** 이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.\n");
 				}
 			}
 			
@@ -144,10 +145,10 @@ public class MainView {
 				stdPw2 = sc.next();
 				
 				if(stdPw1.equals(stdPw2)) {
-					System.out.println("\n[비밀번호가 일치합니다.]\n");
+					System.out.println("\n* 비밀번호가 일치합니다 *\n");
 					break;
 				} else {
-					System.out.println("\n>>비밀번호가 일치하지 않습니다. 다시 입력하세요.<<\n");
+					System.out.println("\n** 비밀번호가 일치하지 않습니다. 다시 입력하세요.\n");
 				}
 			}
 			
@@ -163,7 +164,7 @@ public class MainView {
 				if(stdGender.equals("M") || stdGender.equals("F")) {
 					break;
 				} else {
-					System.out.println("\n>>M 또는 F만 입력해주세요.<<\n");
+					System.out.println("\n** M 또는 F만 입력해주세요.\n");
 				}
 			}
 			// 5) 핸드폰 번호 입력
@@ -175,13 +176,13 @@ public class MainView {
 			int result = service.signUp(student);
 			
 			if(result > 0) {
-				System.out.println("\n[회원 가입이 완료되었습니다.]\n");
+				System.out.println("\n* 회원 가입이 완료되었습니다 *\n");
 			} else {
-				System.out.println("\n>>회원 가입 실패<<\n");
+				System.out.println("\n** 회원 가입 실패\n");
 			}
 			
 		} catch(Exception e) {
-			System.out.println("\n>>회원가입 중 예외 발생<<\n");
+			System.out.println("\n※ 회원가입 중 예외 발생 ※\n");
 			e.printStackTrace();
 		}
 	}
@@ -199,15 +200,15 @@ public class MainView {
 			
 			while(true) {
 				if(stdId != null) {
-					System.out.println("\n회원님의 아이디는 [ " + stdId + " ]입니다.\n");
+					System.out.println("\n* 회원님의 아이디는 [ " + stdId + " ]입니다 *\n");
 					break;				
 				} else {
-					System.out.println("\n>>가입된 정보가 없습니다. 다시 입력하세요.<<\n");		
+					System.out.println("\n** 가입된 정보가 없습니다. 다시 입력하세요.\n");		
 				}
 			}
 			
 		}catch(Exception e) {
-			System.out.println("\n>>아이디 조회 중 예외 발생<<\\n");
+			System.out.println("\n※ 아이디 조회 중 예외 발생 ※\\n");
 			e.printStackTrace();
 		}	
 	}

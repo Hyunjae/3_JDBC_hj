@@ -68,6 +68,14 @@ public class RoutineDAO {
 	}
 
 
+	/** 루틴 기록 DAO
+	 * @param conn
+	 * @param routineNo
+	 * @param string
+	 * @param recordDate
+	 * @return result
+	 * @throws Exception
+	 */
 	public int recordRt(Connection conn, int routineNo, String string, String recordDate) throws Exception {
 		
 		int result = 0;
@@ -96,12 +104,12 @@ public class RoutineDAO {
 	 * @return result
 	 * @throws Exception
 	 */
-	public int updateRt(Connection conn, String routineName, int studentNo) throws Exception {
+	public int insertRt(Connection conn, String routineName, int studentNo) throws Exception {
 		
 		int result = 0;
 		
 		try {
-			String sql = prop.getProperty("updateRt");
+			String sql = prop.getProperty("insertRt");
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, routineName);
@@ -114,8 +122,69 @@ public class RoutineDAO {
 		}
 		return result;
 	}
+	
+	/** 루틴 수정 DAO
+	 * @param conn
+	 * @param rtNo
+	 * @param studentNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateRt(Connection conn, int rtNo, String rtName) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateRt");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rtName);
+			pstmt.setInt(2, rtNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 
+	/** 루틴 삭제 DAO
+	 * @param conn
+	 * @param rtNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteRt(Connection conn, int rtNo) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deleteRt");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rtNo);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result>0) {
+				System.out.println("\n[루틴 삭제 완료]\n");
+			} else {
+				System.out.println("\n>>루틴 삭제 실패<<\n");
+			}
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
+	/** 한 달 기록 조회 DAO
+	 * @param conn
+	 * @param month
+	 * @param studentNo
+	 * @return monthlyRt
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> monthlyRt(Connection conn, int month, int studentNo)
 	throws Exception{
 		
@@ -132,22 +201,48 @@ public class RoutineDAO {
 			
 			while(rs.next()) {
 				Map<String, String> map = new LinkedHashMap<String, String>();
-
-				map.put("rtNo", rs.getInt("RT_NO")+"");  // 문자열로 만들기 위해 ""붙임
-				map.put("rtName", rs.getString("RT_NAME"));
+  
+				map.put("루틴이름", rs.getString("RT_NAME")); // 문자열로 만들기 위해 ""붙임
 				
 				for(int i=1; i<=31; i++) {
-					String col = i < 10 ? "0"+i : ""+i;
-					map.put(col, rs.getString(col));
-				}
+		               String col = i < 10 ? "0"+i : ""+i;
+		               
+		               String temp = "\'" + col + "\'";
+		               
+		               map.put(col, rs.getString(temp));
+		            }
 				monthlyRt.add(map);
 			}
-		} catch(Exception e) {
+		} finally {
 			close(rs);
 			close(pstmt);
 		}
 		return monthlyRt;
 	}
+
+
+	public int updateRtRecord(Connection conn, int routineNo, String string, String recordDate) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updateRtRecord");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, string);
+			pstmt.setString(2, recordDate);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
 
 	
 	

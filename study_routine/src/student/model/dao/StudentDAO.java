@@ -84,4 +84,33 @@ public class StudentDAO {
 		return result;
 	}
 
+	/** 회원 탈퇴 DAO
+	 * @param conn
+	 * @param studentNo
+	 * @param studentPw
+	 * @return result
+	 * @throws Exception
+	 */
+	public int secession(Connection conn, int studentNo, String studentPw) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("secession");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, studentNo);
+			pstmt.setString(2, studentPw);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 }

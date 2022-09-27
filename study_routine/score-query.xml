@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>score-query.xml</comment>
+
+	<!-- 성적입력 -->
+	<entry key="updateScore">
+		INSERT INTO SCORE 
+		VALUES(SEQ_NO_TEST.NEXTVAL, TO_DATE('22/'|| ?), ?, ?)
+	</entry>
+
+	<!-- 성적조회 -->
+	<entry key="selectScore">
+		SELECT TO_CHAR(TEST_DATE, 'MM/DD (DY)') TEST_DATE, TEST_SCORE
+		FROM SCORE
+		WHERE STUDENT_NO = ?
+	</entry>
+
+
+
+</properties>

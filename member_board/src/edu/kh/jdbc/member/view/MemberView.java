@@ -9,10 +9,7 @@ import edu.kh.jdbc.main.view.MainView;
 import edu.kh.jdbc.member.model.service.MemberService;
 import edu.kh.jdbc.member.vo.Member;
 
-/** 회원 메뉴 입/출력 클래스
- * @author user1
- *
- */
+
 public class MemberView {
 	
 	private Scanner sc = new Scanner(System.in);

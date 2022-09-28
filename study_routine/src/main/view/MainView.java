@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import main.model.service.MainService;
+import note.view.NoteView;
 import routine.view.RoutineView;
 import score.view.ScoreView;
 import student.view.StudentView;
@@ -17,6 +18,7 @@ public class MainView {
 	private RoutineView routineView = new RoutineView();
 	private StudentView studentView = new StudentView();
 	private ScoreView scoreView = new ScoreView();
+	private NoteView noteView = new NoteView();
 	
 	public static Student loginStudent = null;
 	
@@ -37,6 +39,7 @@ public class MainView {
 					System.out.print("메뉴 선택 : ");
 					input = sc.nextInt();
 					sc.nextLine();
+					System.out.println();
 					
 					switch(input) {
 					case 1 : login(); break;
@@ -51,7 +54,8 @@ public class MainView {
 					
 					System.out.println("1. 나만의 루틴 만들기");
 					System.out.println("2. 성적관리");
-					System.out.println("3. 회원 정보 수정");
+					System.out.println("3. 필기 공유");
+					System.out.println("4. 회원 정보 수정");
 					System.out.println("0. 로그아웃");
 					System.out.println("99. 프로그램 종료");
 					System.out.println();
@@ -59,11 +63,13 @@ public class MainView {
 					System.out.print("메뉴 선택 : ");
 					input = sc.nextInt();
 					sc.nextLine();
+					System.out.println();
 					
 					switch(input) {
 					case 1 : routineView.routineMenu(); break;
 					case 2 : scoreView.scoreMenu(); break;
-					case 3 : studentView.studentMenu(loginStudent); break;
+					case 3 : noteView.noteMenu();; break;
+					case 4 : studentView.studentMenu(loginStudent); break;
 					case 0 : loginStudent = null;
 							System.out.println("\n[로그아웃 되었습니다.]\n"); 
 							input = -1;

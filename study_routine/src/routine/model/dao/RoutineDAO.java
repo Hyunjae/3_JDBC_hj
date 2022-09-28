@@ -195,12 +195,6 @@ public class RoutineDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			if(result>0) {
-				System.out.println("\n[루틴 삭제 완료]\n");
-			} else {
-				System.out.println("\n>>루틴 삭제 실패<<\n");
-			}
-			
 		} finally {
 			close(pstmt);
 		}

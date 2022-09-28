@@ -29,8 +29,9 @@ public class StudentView {
 				System.out.println("3. 비밀번호 변경(현재 비밀번호, 새 비밀번호, 새 비밀번호 확인)");
 				System.out.println("4. 회원 탈퇴");
 				System.out.println("0. 메인메뉴로 이동");
+				System.out.println();
 
-				System.out.print("\n메뉴 선택 : ");
+				System.out.print("메뉴 선택 : ");
 				input = sc.nextInt();
 				sc.nextLine();
 				System.out.println();
@@ -95,7 +96,6 @@ public class StudentView {
 			
 			if(result > 0) {
 				System.out.println("\n* 정보 수정 완료 *\n");
-				selectMyInfo();
 			} else {
 				System.out.println("\n** 정보 수정 실패\n");				
 			}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>note-query.xml</comment>
+
+	<!-- 전체 과목 조회 -->
+	<entry key="selectSubject">
+		SELECT * FROM SUBJECT
+	</entry>
+
+	<!-- 전체 과목 조회 -->
+	<entry key="selectChapter">
+		SELECT * FROM CHAPTER
+		WHERE SUBJECT_NO =?
+	</entry>
+	
+	<!-- 과목별 노트 조회 -->
+	<entry key="selectAllNote">
+		SELECT * FROM NOTE
+		WHERE CH_ID = ?
+	</entry>
+	
+	<!-- 필기 검색1 -->
+	<entry key="searchNote1">
+		SELECT SUBJECT_NO, SUBJECT_NM, CH_ID, CH_NM, NOTE_TITLE, NOTE_CONTENT
+		FROM NOTE
+		JOIN CHAPTER USING(CH_ID)
+		JOIN SUBJECT USING(SUBJECT_NO)
+		WHERE DELETE_FL = 'N'
+	</entry>
+	
+	<!-- 필기 검색2 -->
+	<entry key="searchNote2_1"> <!-- 주제 -->
+		AND NOTE_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="searchNote2_2"> <!-- 내용 -->
+		AND NOTE_CONTENT LIKE '%' || ? || '%'		
+	</entry>
+	<entry key="searchNote2_3"> <!-- 주제+내용 -->
+		AND (NOTE_TITLE LIKE '%' || ? || '%'
+		OR NOTE_CONTENT LIKE '%' || ? || '%')
+	</entry>
+	
+	<!-- 필기 검색3 -->
+	<entry key="searchNote3">
+		ORDER BY SUBJECT_NO, CH_ID
+	</entry>
+	
+	<!-- 필기 삽입 -->
+	<entry key="insertNote">
+		INSERT INTO NOTE 
+		VALUES(SEQ_NO_NOTE.NEXTVAL, ?, ?, ?, DEFAULT)
+		
+	</entry>
+	
+
+</properties>

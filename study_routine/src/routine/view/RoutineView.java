@@ -22,7 +22,8 @@ public class RoutineView {
 		
 		do {
 			try {
-				System.out.println("\n<< 나만의 루틴 만들기 >>\n");
+				System.out.println();
+				System.out.println("<< 나만의 루틴 만들기 >>\n");
 				
 				System.out.println("1. 나의 루틴 목록");
 				System.out.println("2. 나의 루틴 생성하기");
@@ -35,6 +36,7 @@ public class RoutineView {
 				System.out.print("메뉴 선택 : ");
 				input = sc.nextInt();
 				sc.nextLine();
+				System.out.println();
 				
 				switch(input) {
 				case 1 : selectAllRt(); break;
@@ -42,12 +44,12 @@ public class RoutineView {
 				case 3 : recordRt(); break;
 				case 4 : updateRtRecord(); break;
 				case 5 : monthlyRt(); break;
-				case 0 : System.out.println("\n* 메인 메뉴로 이동합니다 *\n"); break;
-				default : System.out.println("\n** 메뉴에 있는 번호만 입력해주세요\n");
+				case 0 : System.out.println("\n* 회원 메뉴로 이동합니다 *"); break;
+				default : System.out.println("\n** 메뉴에 있는 번호만 입력해주세요");
 				}
 				System.out.println();
 			} catch(InputMismatchException e) {
-				System.out.println("\n※ 입력 형식이 올바르지 않습니다 ※\n");
+				System.out.println("\n※ 입력 형식이 올바르지 않습니다 ※");
 				sc.nextLine();
 			}
 		} while(input != 0);
@@ -60,32 +62,31 @@ public class RoutineView {
 	 */
 	private void selectAllRt() {		
 		try {
-			System.out.println("\n[나의 루틴 LIST]\n");
+			System.out.println("\n[나의 루틴 LIST]");
 			
-			List<Routine> routineList = service.selectAllRt(MainView.loginStudent.getStudentNo());
-			
-			if(!routineList.isEmpty()) {
-				int input = -1;
-				
+			int input = -1;
 				do {
-					System.out.println("* " + MainView.loginStudent.getStudentName() + "님의 루틴 목록 *\n");
+					List<Routine> routineList = service.selectAllRt(MainView.loginStudent.getStudentNo());
+					
+					if(!routineList.isEmpty()) {
+						
+					System.out.println("\n--- " + MainView.loginStudent.getStudentName() + "님의 루틴 목록 ---\n");
 					System.out.println("순번 | 루틴no |  루틴이름 ");
 					System.out.println("--------------------------");
 					for(int i=0; i<routineList.size() ; i++) {
-						System.out.print(i+1 + "번      ");
-						System.out.print(routineList.get(i).getRoutineNo() + "     ");
-						System.out.println(routineList.get(i).getRoutineName()); }
+						System.out.printf("%2d번", i+1);
+						System.out.printf("%7d", routineList.get(i).getRoutineNo());
+						System.out.printf("%10s\n", routineList.get(i).getRoutineName()); }
 					
 					System.out.println();
 					input = subRtMenu(routineList);
-					
-				}while(input != 0);
-				
-			} else {
-				System.out.println("\n** 조회된 루틴이 없습니다.\n");				
-			}
+					} else {
+						System.out.println("\n** 조회된 루틴이 없습니다.");
+						break;
+					}
+				}while(input != 0);				
 		} catch(Exception e) {
-			System.out.println("\n※ 나의 루틴 조회 중 예외 발생 ※\n");
+			System.out.println("\n※ 나의 루틴 조회 중 예외 발생 ※");
 			e.printStackTrace();
 		}
 	}
@@ -105,17 +106,18 @@ public class RoutineView {
 			System.out.print("\n번호 선택 : ");
 			input = sc.nextInt();
 			sc.nextLine();
+			System.out.println();
 			
 			switch(input) {
 			case 1 : insertRt();  break;
 			case 2 : updateRt(routineList);  break;
 			case 3 : deleteRt(routineList);  break;
-			case 0 : System.out.println("\n* 루틴 메뉴로 돌아갑니다 *\n");break;
-			default : System.out.println("\n** 메뉴에 작성된 번호만 입력 해주세요.\n");
+			case 0 : System.out.println("\n* 루틴 메뉴로 돌아갑니다 *");break;
+			default : System.out.println("\n** 메뉴에 작성된 번호만 입력 해주세요.");
 			}
 			
 		} catch (InputMismatchException e) {
-			System.out.println("\n※ 입력 형식이 올바르지 않습니다 ※\n");
+			System.out.println("\n※ 입력 형식이 올바르지 않습니다 ※");
 			sc.nextLine();
 		}
 		return input;
@@ -170,14 +172,14 @@ public class RoutineView {
 					int result = service.updateRt(rtNo, rtName);
 					
 					if(result>0) {
-						System.out.println("\n* 루틴 수정 성공 *\n");
+						System.out.println("\n* 루틴 수정 성공! *\n");
 						
 					} else { 
 						System.out.println("\n** 루틴 수정 실패\n");						
 					}
 					break;
 				}
-			}
+			} 
 			if(flag) {
 				System.out.println("\n** 번호가 일치하는 루틴이 없습니다.\n");
 			}
@@ -195,7 +197,7 @@ public class RoutineView {
 			
 			System.out.println("\n[나의 루틴 삭제하기]\n");
 			
-			System.out.print("삭제할 루틴(번호 입력) : ");
+			System.out.print("\n삭제할 루틴(번호 입력) : ");
 			int rtNo = sc.nextInt();
 			
 			boolean flag = true;
@@ -203,9 +205,15 @@ public class RoutineView {
 				if(rt.getRoutineNo() == rtNo) {
 					flag = false;
 					int result = service.deleteRt(rtNo);
+				
+					if(result>0) {
+						System.out.println("\n* 루틴 삭제 완료! *\n");
+					} else {
+						System.out.println("\n** 루틴 삭제 실패\n");
+					}
 					break;
 				}
-			}
+			} 
 			if(flag) {
 				System.out.println("\n** 번호가 일치하는 루틴이 없습니다.\n");
 			}
@@ -240,11 +248,11 @@ public class RoutineView {
 				if(result > 0) {
 					System.out.println("\n* 오늘의 루틴이 기록 완료! *\n");
 				} else {
-					System.out.println("\n** 루틴 기록 실패\n");					
-				}	
+					System.out.println("\n** 루틴 기록 실패/n");					
+				} 
 			} else {
 				System.out.println("\n ** 조회된 루틴이 없습니다.\n");				
-			}
+			} 
 		} catch (Exception e) {
 			System.out.println("\n※ 나의 루틴 기록 중 예외 발생 ※\n");
 			e.printStackTrace();
@@ -274,7 +282,7 @@ public class RoutineView {
 					System.out.println();
 				}						
 			}
-		}
+		} System.out.println();
 	}
 
 
@@ -306,7 +314,7 @@ public class RoutineView {
 				}	
 			} else {
 				System.out.println("\n ** 조회된 루틴이 없습니다.\n");				
-			}
+			} 
 		} catch (Exception e) {
 			System.out.println("\n※ 나의 루틴 수정 중 예외 발생 ※\n");
 			e.printStackTrace();

@@ -23,9 +23,10 @@ public class ScoreView {
 				System.out.println("\n<< 성적 관리 >>\n");
 				System.out.println("1. 내 성적 입력");
 				System.out.println("2. 내 성적 조회");
-				System.out.println("0. 메인메뉴로 이동");
+				System.out.println("0. 회원메뉴로 이동");
+				System.out.println();
 
-				System.out.print("\n메뉴 선택 : ");
+				System.out.print("메뉴 선택 : ");
 				input = sc.nextInt();
 				sc.nextLine();
 				System.out.println();
@@ -33,10 +34,9 @@ public class ScoreView {
 				switch (input) {
 				case 1 : updateScore(); break;
 				case 2 : selectScore(); break;
-				case 0 : System.out.println("\n* 메인 메뉴로 이동합니다 *"); break;
+				case 0 : System.out.println("\n* 회원 메뉴로 이동합니다 *"); break;
 				default : System.out.println("\n** 메뉴에 작성된 번호만 입력해주세요.");
 				}
-				
 				System.out.println();
 			} catch(InputMismatchException e) {
 				System.out.println("\n※ 입력 형식이 올바르지 않습니다 ※");
@@ -51,7 +51,7 @@ public class ScoreView {
 		try {
 			System.out.println("\n[성적 입력]\n");
 						
-			System.out.print("\n시험일(월/일) : ");
+			System.out.print("시험일(월/일) : ");
 			String testDate = sc.next();
 			System.out.print("\n시험 성적(100점 만점) : ");
 			int testScore = sc.nextInt();

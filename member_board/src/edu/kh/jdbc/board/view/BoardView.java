@@ -555,13 +555,9 @@ public class BoardView {
 								b.getMemberName(), b.getCreateDate(), b.getReadCount());
 					}
 				}	
- 				
-				
 			} else { // 비정상 입력
 				System.out.println("\n[1~4번 사이의 숫자를 입력해주세요.]\n");
 			}
-			
-			
 		} catch(Exception e) {
 			System.out.println("\n<<게시글 검색 중 예외 발생>>\n");
 			e.printStackTrace();
